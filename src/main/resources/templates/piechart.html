@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>companies shares</title>
+  <!--Load the AJAX API-->
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script th:inline="javascript">
+        /**
+         *
+         * @author Draz
+         */
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        var records = [[${chartData}]]
+        function drawChart() {
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Topping');
+            data.addColumn('number', 'Slices');
+            for(i = 0; i < records.length; i++)
+              data.addRow([records[i][0], records[i][1]]);
+
+            var options = {'title':'Vacancies per Company',
+            is3D: true};
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+<h1 align="center"><i>Data visualization</i></h1>
+<div align="right" id="piechart" style="width: 900px; height: 500px;"></div>
+</body>
+</html>
